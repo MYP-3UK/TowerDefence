@@ -32,35 +32,7 @@ public class UnitController : MonoBehaviour
     }
     void Update()
     {
-        if (touchHandler.type == TouchHandler.TouchType.FastClick && SelectedTower == null)
-        {
-            GameObject selTow = SelectTower();
-            if (selTow != null && towers.Contains(selTow)) 
-            {
-                SelectedTower = selTow;
-            }
-        }
-        if (touchHandler.type == TouchHandler.TouchType.LongClick && SelectedTower != null)
-        {
-            if (SelectTower() == SelectedTower)
-            {
-                CountOfUnitsToExit = Mathf.FloorToInt(touchHandler.touchTime);
-            }
-        }
-        if (touchHandler.type == TouchHandler.TouchType.FastClick && SelectedTower != null && CountOfUnitsToExit != 0)
-        {
-            GameObject selTow = SelectTower();
-            if (selTow == SelectedTower)
-            {
-                SelectedTower = null;
-                CountOfUnitsToExit = 0;
-            }
-            else if (selTow!=null && towers.Contains(selTow))
-            {
-                SelectedTower.GetComponent<Tower>().ReleaseUnits(CountOfUnitsToExit,selTow);
-            }
-        }
-
+        
     }
     GameObject SelectTower()
     {
