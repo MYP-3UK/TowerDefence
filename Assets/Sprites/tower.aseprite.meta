@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 92d17df78062f5c4097448ace8699434
+guid: 6d2e9670a84144144a6de873db5b9845
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638468303149191309
+  platformSettingsDirtyTick: 638468303102186413
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -121,7 +121,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Unit
+  - name: tower
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -130,9 +130,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 14
-      height: 16
-    spriteID: 0a154144e81006240bbd9563fba2846b
+      width: 64
+      height: 91
+    spriteID: f3b235d774c10c04493f4d4edd45fc7e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,20 +144,20 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1805892604
-    name: Unit
+    guid: 261548659
+    name: tower
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Unit
+    - name: tower
       frameIndex: 0
       cellRect:
-        x: 1
+        x: 8
         y: 0
-        width: 14
-        height: 16
-      spriteId: 0a154144e81006240bbd9563fba2846b
+        width: 64
+        height: 91
+      spriteId: f3b235d774c10c04493f4d4edd45fc7e
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -200,4 +200,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 16, y: 16}
+  canvasSize: {x: 80, y: 99}

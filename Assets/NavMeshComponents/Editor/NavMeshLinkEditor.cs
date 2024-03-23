@@ -2,7 +2,6 @@ using NavMeshPlus.Components;
 using UnityEditor;
 using UnityEditor.AI;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace NavMeshPlus.Editors.Components
 {
@@ -123,7 +122,7 @@ namespace NavMeshPlus.Editors.Components
         static Vector3 CalcLinkRight(NavMeshLink navLink)
         {
             var dir = navLink.endPoint - navLink.startPoint;
-            return (new Vector3(-dir.z, 0.0f, dir.x)).normalized;
+            return new Vector3(-dir.z, 0.0f, dir.x).normalized;
         }
 
         static void DrawLink(NavMeshLink navLink)
@@ -131,10 +130,10 @@ namespace NavMeshPlus.Editors.Components
             var right = CalcLinkRight(navLink);
             var rad = navLink.width * 0.5f;
 
-            Gizmos.DrawLine(navLink.startPoint - right * rad, navLink.startPoint + right * rad);
-            Gizmos.DrawLine(navLink.endPoint - right * rad, navLink.endPoint + right * rad);
-            Gizmos.DrawLine(navLink.startPoint - right * rad, navLink.endPoint - right * rad);
-            Gizmos.DrawLine(navLink.startPoint + right * rad, navLink.endPoint + right * rad);
+            Gizmos.DrawLine(navLink.startPoint - (right * rad), navLink.startPoint + (right * rad));
+            Gizmos.DrawLine(navLink.endPoint - (right * rad), navLink.endPoint + (right * rad));
+            Gizmos.DrawLine(navLink.startPoint - (right * rad), navLink.endPoint - (right * rad));
+            Gizmos.DrawLine(navLink.startPoint + (right * rad), navLink.endPoint + (right * rad));
         }
 
         [DrawGizmo(GizmoType.Selected | GizmoType.Active | GizmoType.Pickable)]
@@ -249,19 +248,19 @@ namespace NavMeshPlus.Editors.Components
             }
 
             EditorGUI.BeginChangeCheck();
-            pos = Handles.Slider(midPt + right * navLink.width * 0.5f, right, midSize * 0.03f, Handles.DotHandleCap, 0);
+            pos = Handles.Slider(midPt + (right * navLink.width * 0.5f), right, midSize * 0.03f, Handles.DotHandleCap, 0);
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(navLink, "Adjust link width");
-                navLink.width = Mathf.Max(0.0f, 2.0f * Vector3.Dot(right, (pos - midPt)));
+                navLink.width = Mathf.Max(0.0f, 2.0f * Vector3.Dot(right, pos - midPt));
             }
 
             EditorGUI.BeginChangeCheck();
-            pos = Handles.Slider(midPt - right * navLink.width * 0.5f, -right, midSize * 0.03f, Handles.DotHandleCap, 0);
+            pos = Handles.Slider(midPt - (right * navLink.width * 0.5f), -right, midSize * 0.03f, Handles.DotHandleCap, 0);
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(navLink, "Adjust link width");
-                navLink.width = Mathf.Max(0.0f, 2.0f * Vector3.Dot(-right, (pos - midPt)));
+                navLink.width = Mathf.Max(0.0f, 2.0f * Vector3.Dot(-right, pos - midPt));
             }
 
             Handles.color = oldColor;
