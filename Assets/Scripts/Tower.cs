@@ -20,7 +20,6 @@ public class Tower : MonoBehaviour
         {
             units[i].GetComponent<UnitMovement>().SetTarget(target);
             units[i].SetActive(true);
-            units[i].transform.position = transform.position;
             units.Remove(units[i]);
         }
     }
