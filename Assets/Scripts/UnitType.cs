@@ -1,7 +1,8 @@
-using UnityEngine;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-
+using System;
+using UnityEngine;
 
 [System.Serializable]
 public class EntityData
@@ -25,50 +26,36 @@ public class EntityList
 
 public class UnitType : MonoBehaviour
 {
-    public static EntityList CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<EntityList>(jsonString);
-        }
-    void Start()
+    public void Start()
     {
-        
-        string fileName = "Entity.json";
+        string fileName = "config.json";
         string path = Path.Combine(Application.dataPath, "Scripts", fileName);
+        Debug.Log("Path: " + path);
 
         if (File.Exists(path))
         {
-            string jsonString = File.ReadAllText(path);
-            EntityList entityList = JsonUtility.FromJson<EntityList>(jsonString); // CreateFromJSON(jsonString);  // 
-            if (entityList != null && entityList.Entity != null)
+            // Read the json file where primary key is entity
+            string json = File.ReadAllText(path).Trim();
+            // Convert the json to object
+            EntityList entityList = JsonConvert.DeserializeObject<EntityList>(json) ??
+                                    throw new InvalidOperationException(
+                                        "Failed to deserialize json to EntityList object.");
+            foreach (var entity in entityList.Entity)
             {
-                foreach (var entity in entityList.Entity)
-                {
-                    Debug.Log("Entity ID: " + entity.Key);
-                    EntityData data = entity.Value;
-                    if (data != null)
-                    {
-                        Debug.Log("Name: " + data.Name);
-                        Debug.Log("Type: " + data.type);
-                        Debug.Log("Move Speed: " + data.MoveSpeed);
-                        Debug.Log("Attack Speed: " + data.AttackSpeed);
-                        Debug.Log("Health: " + data.Health);
-                        Debug.Log("Durability: " + data.Durability);
-                        Debug.Log("Vulnerability: " + data.Vulnerability);
-                    }
-                    else
-                    {
-                        Debug.LogError("EntityData is null for ID: " + entity.Key);
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogError("EntityList or EntityList.Entity is null.");
+                Debug.Log("Entity ID: " + entity.Key);
+                EntityData data = entity.Value;
+                Debug.Log("Name: " + data.Name);
+                Debug.Log("Type: " + data.type);
+                Debug.Log("Move Speed: " + data.MoveSpeed);
+                Debug.Log("Attack Speed: " + data.AttackSpeed);
+                Debug.Log("Health: " + data.Health);
+                Debug.Log("Durability: " + data.Durability);
+                Debug.Log("Vulnerability: " + data.Vulnerability);
             }
         }
         else
         {
-            Debug.LogError("File " + fileName + " not found.");
+            Debug.Log("File " + fileName + " not found.");
         }
     }
 }
