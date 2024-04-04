@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using static CustomTools;
 
-public class UnitMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    [Header("Unit properties")]
+    [Header("Enemy properties")]
     [SerializeField] GameObject target;
     [Header("Animation coefs")]
     [SerializeField] AnimationCurve jigglingCoef;
@@ -42,16 +42,10 @@ public class UnitMovement : MonoBehaviour
             agent.speed = BaseSpeed / agent.GetAreaCost(FirstBitIndex(hit.mask));
 
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(StepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
-
-            if (Vector3.Distance(target.transform.position, transform.position) < DistanceToEnter)
-            {
-                target.GetComponent<Tower>().EnterUnit(gameObject);
-            };
         }
         else
         {
-            target = GameObject.FindGameObjectsWithTag("Tower").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault();
+            target = GameObject.FindGameObjectsWithTag("Base").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault();
         }
     }
-
 }
