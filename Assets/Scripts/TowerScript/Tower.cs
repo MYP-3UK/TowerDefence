@@ -17,7 +17,7 @@ public class Tower : MonoBehaviour
     {
         for (int i = math.clamp(Count - 1,0,units.Count); i >= 0; i--)
         {
-            units[i].GetComponent<UnitMovement>().SetTarget(target);
+            units[i].GetComponent<Unit>().SetTarget(target);
             units[i].SetActive(true);
             units.Remove(units[i]);
         }

@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  baseSpeed: 3
+  agent: {fileID: 0}
   jigglingCoef:
     serializedVersion: 2
     m_Curve:
@@ -157,9 +159,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Health: 1
-  BaseSpeed: 2
-  DistanceToEnter: 1
+  health: 1
+  distanceToEnter: 1
 --- !u!195 &1457586264307988483
 NavMeshAgent:
   m_ObjectHideFlags: 0
