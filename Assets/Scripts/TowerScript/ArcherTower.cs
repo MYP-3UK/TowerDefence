@@ -13,6 +13,35 @@ public class ArcherTower : Tower
     [SerializeField] float attackTimer;
     [SerializeField] float projSpeed;
     [SerializeField] bool IsFire;
+    [SerializeField] TargetType type;
+
+    enum TargetType
+    {
+        First = 0,
+        Last,
+        Nearest,
+        Farthest
+    }
+    GameObject SelectTarget(TargetType type)
+    {
+        switch (type)
+        {
+            case TargetType.First:
+                return enemiesInRange.First();
+                
+            case TargetType.Last:
+                return enemiesInRange.Last();
+                
+            case TargetType.Nearest:
+                return enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).First();
+                
+            case TargetType.Farthest:
+                return enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).Last();
+
+            default: return null;
+        }
+    }
+
 
     private void Awake()
     {
@@ -67,7 +96,7 @@ public class ArcherTower : Tower
             attackTimer += Time.deltaTime / attackRate;
             while (attackTimer > 1)
             {
-                var target = enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).First();
+                var target = SelectTarget(type);
 
                 var proj = Instantiate(projectile, transform.position + (Vector3)RangeOfAttack.offset, quaternion.identity);
                 proj.GetComponent<Rigidbody2D>().velocity = (target.transform.position - transform.position).normalized * projSpeed;

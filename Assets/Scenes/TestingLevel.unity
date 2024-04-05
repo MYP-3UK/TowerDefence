@@ -11640,7 +11640,7 @@ MonoBehaviour:
   m_OverrideArea: 0
   m_Area: 0
   m_IgnoreFromBuild: 0
-  m_AffectedAgents: 00000000
+  m_AffectedAgents: ffffffff
 --- !u!1 &481543339
 GameObject:
   m_ObjectHideFlags: 0
@@ -11936,10 +11936,11 @@ MonoBehaviour:
   RangeOfAttack: {fileID: 579842951}
   enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.25
+  attackRate: 0.05
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
+  type: 3
 --- !u!1 &821134500
 GameObject:
   m_ObjectHideFlags: 0
@@ -16944,10 +16945,11 @@ MonoBehaviour:
   RangeOfAttack: {fileID: 1071002024}
   enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.25
+  attackRate: 0.05
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
+  type: 3
 --- !u!1 &1133502668
 GameObject:
   m_ObjectHideFlags: 0
@@ -17189,7 +17191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04976799df50f54ba128eff723155a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -17470,10 +17472,11 @@ MonoBehaviour:
   RangeOfAttack: {fileID: 1774766339}
   enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.25
+  attackRate: 0.05
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
+  type: 3
 --- !u!1 &1998047527
 GameObject:
   m_ObjectHideFlags: 0
@@ -17522,10 +17525,14 @@ MonoBehaviour:
     waves:
     - timePerWave: 0
       crowds:
-      - CrowdName: Crowd of Skeletons
-        count: 64
+      - CrowdName: Crowd of Enemies
+        count: 100
         timePerCrowd: 0
         enemyPrefab: {fileID: 3635060071280735542, guid: b468d05e686ccef4d87e3678f5743f27, type: 3}
+      - CrowdName: Boss
+        count: 1
+        timePerCrowd: 0
+        enemyPrefab: {fileID: 2585337308117559129, guid: 5dc5d05d81db5d34f8abe8bdf8b20d80, type: 3}
 --- !u!1 &2066715051
 GameObject:
   m_ObjectHideFlags: 0
