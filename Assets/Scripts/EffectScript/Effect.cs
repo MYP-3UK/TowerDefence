@@ -1,3 +1,4 @@
+// Базовый класс для всех остальных эффектов
 public abstract class Effect   
 {
     public float Duration;
@@ -16,6 +17,7 @@ public abstract class Effect
     public abstract void Remove();
 }
 
+// Пример реализации одного из эффектов
 public class SlowEffect : Effect
 {
     public SlowEffect(Unit target, float duration, float power) : base(target, duration, power)

@@ -46,7 +46,7 @@ public class MovableObject : MonoBehaviour
 
         if (agent.Raycast(agent.transform.position, out var hit))
         {
-            agent.speed = baseSpeed / agent.GetAreaCost(CustomTools.FirstBitIndex(hit.mask));
+            agent.speed = baseSpeed / agent.GetAreaCost(FirstBitIndex(hit.mask));
         }
     }
     private protected void ChangeSpeed()

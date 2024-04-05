@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4745549523587874010}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Unit
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,6 +160,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   health: 1
+  damage: 1
+  radiusOfAttack: 1
   distanceToEnter: 1
 --- !u!195 &1457586264307988483
 NavMeshAgent:

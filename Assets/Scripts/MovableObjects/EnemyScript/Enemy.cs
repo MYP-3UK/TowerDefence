@@ -16,6 +16,7 @@ public class Enemy : MovableObject
     [SerializeField] private float distanceToEnter = 1f; //Дистанция при которой враг попадает на базу
     [Header("Active effects")]
     private List<Effect> effects = new List<Effect>();
+    public bool isDead;
 
     private float stepTime; // Фаза ходьбы (для того, чтобы все враги не шли в одну ногу)
     new void Awake()
@@ -49,6 +50,20 @@ public class Enemy : MovableObject
         stepTime += Time.deltaTime * jigglingCoef.Evaluate(agent.velocity.magnitude);
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(stepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
     }
+
+    public void ApplyDamage(float damage, GameObject owner)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
+        }
+    }
+
+    //TODO
+    #region Effects 
     public void AddEffect(Effect effect)
     {
         effects.Add(effect);
@@ -72,4 +87,5 @@ public class Enemy : MovableObject
             }
         }
     }
+    #endregion
 }

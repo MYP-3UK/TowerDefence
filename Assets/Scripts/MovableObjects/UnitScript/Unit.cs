@@ -51,6 +51,8 @@ public class Unit : MovableObject
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(stepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
     }
 
+    //TODO
+    #region Effects 
     public void AddEffect(Effect effect)
     {
         effects.Add(effect);
@@ -74,5 +76,5 @@ public class Unit : MovableObject
             }
         }
     }
-
+    #endregion
 }
