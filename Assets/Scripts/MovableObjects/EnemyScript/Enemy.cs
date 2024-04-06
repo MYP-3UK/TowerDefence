@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
-using static CustomTools;
 
 public class Enemy : MovableObject
 {
     [Header("Animation coefs")]
     [SerializeField] private AnimationCurve jigglingCoef; //Частота шага в зависимости от скорости
     [SerializeField] private AnimationCurve jigglingAmp;  //Амплитуда покачиваний во время ходьбы
+
+    [Header("Flipping sprite")]
+    [SerializeField] private bool isFlipping; //Отражение спрайта в зависимости от направления движения
+    [SerializeField] private float velocityForFlipping; //Пороговое значение скорости, при котором меняется направление
+
     [Header("Characteristics")]
     [SerializeField] private float health = 1f;
     [SerializeField] private float damage = 1f;
@@ -19,10 +22,15 @@ public class Enemy : MovableObject
     public bool isDead;
 
     private float stepTime; // Фаза ходьбы (для того, чтобы все враги не шли в одну ногу)
+
+    private SpriteRenderer spriteRenderer;
+
     new void Awake()
     {
         base.Awake(); // Вызов Awake из MovableObject
         stepTime = Random.value;
+
+        spriteRenderer = GetComponent<SpriteRenderer>() ?? gameObject.AddComponent<SpriteRenderer>();
     }
 
     new void Update()
@@ -38,6 +46,12 @@ public class Enemy : MovableObject
         {
             FindNewTarget();
         }
+
+        if (isFlipping && Mathf.Abs(agent.velocity.x) > velocityForFlipping)
+        {
+            spriteRenderer.flipX = agent.velocity.x > 0;
+        }
+
     }
 
     void FindNewTarget()
@@ -58,7 +72,7 @@ public class Enemy : MovableObject
         {
             owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
             gameObject.SetActive(false);
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 

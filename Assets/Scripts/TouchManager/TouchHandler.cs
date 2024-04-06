@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class TouchHandler : MonoBehaviour
@@ -37,11 +36,11 @@ public class TouchHandler : MonoBehaviour
                 case TouchPhase.Began:
                     touchStartTime = Time.time;
                     IsTouched = true;
-                break;
+                    break;
 
                 case TouchPhase.Moved:
                     Type = TouchType.Drag;
-                break;
+                    break;
 
                 case TouchPhase.Ended:
                     TouchDuration = Time.time - touchStartTime;
@@ -54,7 +53,7 @@ public class TouchHandler : MonoBehaviour
                         Type = TouchType.FastClick;
                     }
                     IsTouched = false;
-                break;
+                    break;
             }
             IsEnded = touch.phase == TouchPhase.Ended;
         }

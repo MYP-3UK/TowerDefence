@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Stage stage;
-    
+
     void Start()
     {
         stage.SpawnStage(transform);
@@ -15,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     [Serializable]
@@ -39,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
             public void SpawnWave(Transform transform)
             {
-                foreach (var crowd in crowds) {crowd.SpawnCrowd(transform);}
+                foreach (var crowd in crowds) { crowd.SpawnCrowd(transform); }
             }
 
             [Serializable]
@@ -59,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    
 
-    
+
+
 }

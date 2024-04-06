@@ -39,7 +39,7 @@ public class Unit : MovableObject
             FindNewTarget();
         }
     }
-    
+
     void FindNewTarget()
     {
         SetTarget(GameObject.FindGameObjectsWithTag("Tower").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault());

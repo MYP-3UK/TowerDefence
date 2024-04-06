@@ -1,5 +1,5 @@
 // Базовый класс для всех остальных эффектов
-public abstract class Effect   
+public abstract class Effect
 {
     public float Duration;
     public float Power;

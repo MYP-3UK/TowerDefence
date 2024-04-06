@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
 public class ArcherTower : Tower
 {
+    List<GameObject> enemiesInRange; // SerializeField вызывает ошибку, потому что когда объекты удал€ютс€, UnityEditor всЄ равно пытаетс€ к ним обратитс€ :/
     [SerializeField] CircleCollider2D RangeOfAttack;
-    [SerializeField] List<GameObject> enemiesInRange;
     [SerializeField] GameObject projectile;
     [SerializeField] float attackRate;
     [SerializeField] float attackTimer;
@@ -28,20 +27,30 @@ public class ArcherTower : Tower
         {
             case TargetType.First:
                 return enemiesInRange.First();
-                
+
             case TargetType.Last:
                 return enemiesInRange.Last();
-                
+
             case TargetType.Nearest:
                 return enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).First();
-                
+
             case TargetType.Farthest:
                 return enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).Last();
 
             default: return null;
         }
     }
+    void SpawnProjectile(GameObject target)
+    {
+        Vector2 targetCenter = target.GetComponent<BoxCollider2D>().bounds.center;
+        Vector2 towerCenter = (Vector2)transform.position + RangeOfAttack.offset;
+        Vector2 direction = (targetCenter - towerCenter).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
+        var proj = Instantiate(projectile, towerCenter, Quaternion.Euler(0, 0, angle));
+        proj.GetComponent<Rigidbody2D>().velocity = direction * projSpeed;
+        proj.GetComponent<Projectile>().owner = gameObject;
+    }
 
     private void Awake()
     {
@@ -75,21 +84,9 @@ public class ArcherTower : Tower
 
     #endregion
 
+
     private void Update()
     {
-
-        if (enemiesInRange.Count != 0)
-        {
-            for (int i = enemiesInRange.Count - 1; i >= 0; i--)
-            {
-                GameObject enemy = enemiesInRange[i];
-                Debug.DrawLine(enemy.transform.position, transform.position + (Vector3)RangeOfAttack.offset);
-                if (Vector3.Distance(enemy.transform.position, transform.position + (Vector3)RangeOfAttack.offset) > RangeOfAttack.radius + 0.5f)
-                {
-                    enemiesInRange.RemoveAt(i);
-                }
-            }
-        }
 
         if (enemiesInRange.Count != 0)
         {
@@ -97,82 +94,15 @@ public class ArcherTower : Tower
             while (attackTimer > 1)
             {
                 var target = SelectTarget(type);
-
-                var proj = Instantiate(projectile, transform.position + (Vector3)RangeOfAttack.offset, quaternion.identity);
-                proj.GetComponent<Rigidbody2D>().velocity = (target.transform.position - transform.position).normalized * projSpeed;
-                proj.transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(target.transform.position.y-transform.position.y,target.transform.position.x-transform.position.x) * Mathf.Rad2Deg);
-                proj.GetComponent<Projectile>().owner = gameObject;
-                    
-                proj = null;
+                SpawnProjectile(target);
                 attackTimer--;
             }
         }
-
-
-        //if (enemiesInRange.Count != 0)
-        //{
-        //    attackTimer += Time.deltaTime / attackRate;
-
-        //    while (attackTimer > 1)
-        //    {
-        //        var target = enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).First();
-
-        //        var proj = Instantiate(projectile, transform);
-        //        proj.GetComponent<Rigidbody2D>().velocity = (target.transform.position - transform.position).normalized * projSpeed;
-        //        proj.GetComponent<Projectile>().owner = gameObject;
-
-        //        attackTimer--;
-        //    }
-        //}
-
-        /*if (enemiesInRange.Count != 0) //ћЌќ√ќ ќЎ»Ѕќ  (но работает)
-        {
-            if (!IsFire)
-            {
-                IsFire = true;
-                StartCoroutine(ProjectileSpawner());
-            }
-        }
-        else
-        {
-            if (IsFire)
-            {
-                IsFire = false;
-                StopCoroutine(ProjectileSpawner());
-            }
-        }*/
-
-
     }
-    /*
-    private IEnumerator ProjectileSpawner()
-    {
-        while (true)
-        {
-            GameObject target = new GameObject();
-            float dist2 = Mathf.Infinity;
-            for (int i = 0; i < enemiesInRange.Count; i++)
-            {
-                GameObject enemy = enemiesInRange[i];
-                if (enemy!=null && (enemy.transform.position - transform.position).sqrMagnitude < dist2)
-                {
-                    dist2 = (enemy.transform.position - transform.position).sqrMagnitude;
-                    target = enemy;
-                }
-            }
-            if (target == null) yield return null;
-            //var enemy = enemiesInRange.OrderBy(x => (x.transform.position - transform.position).sqrMagnitude).First();
-            var proj = Instantiate(projectile, transform);
-            proj.GetComponent<Rigidbody2D>().velocity = (target.transform.position - transform.position).normalized * projSpeed;
-            proj.GetComponent<Projectile>().owner = gameObject;
-            yield return new WaitForSeconds(attackRate);
-        }
-    }*/
-
     private void OnDrawGizmos()
     {
-        if (RangeOfAttack!=null) Handles.DrawWireDisc(transform.position + (Vector3)RangeOfAttack.offset, Vector3.forward, RangeOfAttack.radius);
-        if (enemiesInRange.Count != 0)
+        if (RangeOfAttack != null) Handles.DrawWireDisc(transform.position + (Vector3)RangeOfAttack.offset, Vector3.forward, RangeOfAttack.radius);
+        if (enemiesInRange != null && enemiesInRange.Count != 0)
         {
             foreach (GameObject enemy in enemiesInRange)
             {

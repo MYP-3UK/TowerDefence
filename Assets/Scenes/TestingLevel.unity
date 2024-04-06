@@ -123,6 +123,39 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &41216276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 41216277}
+  m_Layer: 0
+  m_Name: NavMeshes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &41216277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41216276}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.9864664, y: 9.5058975, z: 0.015787931}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 995472829}
+  - {fileID: 1224970666}
+  m_Father: {fileID: 1133502669}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &45168412
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,13 +187,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 32
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
-  m_UpscaleRT: 0
+  m_RefResolutionX: 360
+  m_RefResolutionY: 760
+  m_UpscaleRT: 1
   m_PixelSnapping: 1
   m_CropFrameX: 0
   m_CropFrameY: 0
-  m_StretchFill: 0
+  m_StretchFill: 1
 --- !u!20 &45168414
 Camera:
   m_ObjectHideFlags: 0
@@ -196,7 +229,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.875
+  orthographic size: 12
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -11934,13 +11967,12 @@ MonoBehaviour:
   health: 1
   units: []
   RangeOfAttack: {fileID: 579842951}
-  enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.05
+  attackRate: 0.125
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
-  type: 3
+  type: 0
 --- !u!1 &821134500
 GameObject:
   m_ObjectHideFlags: 0
@@ -11970,7 +12002,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1224970666}
   - {fileID: 1998047528}
   m_Father: {fileID: 122857896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12046,11 +12077,11 @@ Transform:
   m_GameObject: {fileID: 995472828}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.9864664, y: -9.5058975, z: -0.015787931}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2066715052}
+  m_Father: {fileID: 41216277}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &995472830
 MonoBehaviour:
@@ -16943,13 +16974,12 @@ MonoBehaviour:
   health: 1
   units: []
   RangeOfAttack: {fileID: 1071002024}
-  enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.05
+  attackRate: 0.125
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
-  type: 3
+  type: 0
 --- !u!1 &1133502668
 GameObject:
   m_ObjectHideFlags: 0
@@ -16979,6 +17009,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 41216277}
   - {fileID: 83825414}
   - {fileID: 968992948}
   m_Father: {fileID: 0}
@@ -17142,7 +17173,7 @@ GameObject:
   - component: {fileID: 1224970668}
   - component: {fileID: 1224970667}
   m_Layer: 0
-  m_Name: EnemyNavMesh
+  m_Name: BearNavMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17156,12 +17187,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224970665}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -5.9864664, y: -9.5058975, z: -0.015787931}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 821134501}
+  m_Father: {fileID: 41216277}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1224970667
 MonoBehaviour:
@@ -17191,7 +17222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04976799df50f54ba128eff723155a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: 1479372276
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -17205,7 +17236,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.0625
+  m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 23800000, guid: 305c0d904f2b0f245819d8955d224dfe, type: 2}
@@ -17470,13 +17501,12 @@ MonoBehaviour:
   health: 1
   units: []
   RangeOfAttack: {fileID: 1774766339}
-  enemiesInRange: []
   projectile: {fileID: 6561135981250822360, guid: 3adde7c091c9a7b4d87da96ca249833c, type: 3}
-  attackRate: 0.05
+  attackRate: 0.125
   attackTimer: 0
   projSpeed: 10
   IsFire: 0
-  type: 3
+  type: 0
 --- !u!1 &1998047527
 GameObject:
   m_ObjectHideFlags: 0
@@ -17526,13 +17556,17 @@ MonoBehaviour:
     - timePerWave: 0
       crowds:
       - CrowdName: Crowd of Enemies
-        count: 100
+        count: 16
         timePerCrowd: 0
         enemyPrefab: {fileID: 3635060071280735542, guid: b468d05e686ccef4d87e3678f5743f27, type: 3}
-      - CrowdName: Boss
+      - CrowdName: MiniBosses
+        count: 4
+        timePerCrowd: 0
+        enemyPrefab: {fileID: 8620455256195025593, guid: 967fde4d8a8f6e9429036bcfdb6ee560, type: 3}
+      - CrowdName: Daddy
         count: 1
         timePerCrowd: 0
-        enemyPrefab: {fileID: 2585337308117559129, guid: 5dc5d05d81db5d34f8abe8bdf8b20d80, type: 3}
+        enemyPrefab: {fileID: 6459627495019822221, guid: 180146c149174074fa0c24f33aab85b5, type: 3}
 --- !u!1 &2066715051
 GameObject:
   m_ObjectHideFlags: 0
@@ -17561,8 +17595,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 995472829}
+  m_Children: []
   m_Father: {fileID: 122857896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807

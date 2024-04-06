@@ -38,7 +38,7 @@ public class UnitController : MonoBehaviour
         if (hit.collider != null && towers.Contains(hit.collider.gameObject))
         {
             Debug.Log(hit.collider.gameObject);
-            Debug.DrawLine(hit.collider.bounds.min, hit.collider.bounds.max,Color.red,1);
+            Debug.DrawLine(hit.collider.bounds.min, hit.collider.bounds.max, Color.red, 1);
             return hit.collider.gameObject;
         }
 
