@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: enemy4
     originalName: 
-    pivot: {x: 0.5, y: 0}
-    alignment: 7
+    pivot: {x: 0.5263158, y: 0}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 17
-      height: 32
+      width: 19
+      height: 34
     spriteID: bf6ac4f8b0b67fb46a2d39d9c296e3ba
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: enemy4
       frameIndex: 0
       cellRect:
-        x: 7
+        x: 6
         y: 0
-        width: 17
-        height: 32
+        width: 19
+        height: 34
       spriteId: bf6ac4f8b0b67fb46a2d39d9c296e3ba
     linkedCells: []
     parentIndex: -1
@@ -200,4 +200,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 32, y: 32}
+  canvasSize: {x: 32, y: 34}

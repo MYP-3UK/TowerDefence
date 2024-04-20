@@ -54,8 +54,8 @@ public class ArcherTower : Tower
 
     private void Awake()
     {
-        RangeOfAttack = GetComponent<CircleCollider2D>() ?? gameObject.AddComponent<CircleCollider2D>();
         enemiesInRange = new List<GameObject>();
+        RangeOfAttack = GetComponent<CircleCollider2D>() ?? gameObject.AddComponent<CircleCollider2D>();
     }
 
     #region Find enemies in range of attack

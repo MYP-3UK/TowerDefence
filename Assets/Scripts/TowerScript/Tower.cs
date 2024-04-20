@@ -12,14 +12,14 @@ public class Tower : MonoBehaviour
         units.Add(unit);
         unit.SetActive(false);
     }
-
     public void ReleaseUnits(int Count, GameObject target)
     {
-        for (int i = math.clamp(Count - 1, 0, units.Count); i >= 0; i--)
+        int unitCount = math.min(Count, units.Count);
+        for (int i = unitCount - 1; i >= 0; i--)
         {
-            units[i].GetComponent<Unit>().SetTarget(target);
             units[i].SetActive(true);
-            units.Remove(units[i]);
+            units[i].GetComponent<Unit>().SetTarget(target);
+            units.RemoveAt(i);
         }
     }
 }
