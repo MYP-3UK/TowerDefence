@@ -9,6 +9,7 @@ TagManager:
   - Unit
   - Enemy
   - Base
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Towers
+  - AttackRange
   - 
   - 
   - 
