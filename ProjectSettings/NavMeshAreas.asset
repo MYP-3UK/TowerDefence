@@ -14,7 +14,7 @@ NavMeshProjectSettings:
   - name: Forest
     cost: 2
   - name: Tower
-    cost: 999
+    cost: 4
   - name: 
     cost: 1
   - name: 

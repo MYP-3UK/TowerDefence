@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  damage: 100
+  damage: 1
   despawnTime: 0.5
 --- !u!61 &1201311217095213922
 BoxCollider2D:

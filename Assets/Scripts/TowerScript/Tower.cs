@@ -5,14 +5,14 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     [SerializeField] float health;
-    [SerializeField] List<GameObject> units;
+    [SerializeField] protected List<GameObject> units;
 
-    public void EnterUnit(GameObject unit)
+    public virtual void EnterUnit(GameObject unit)
     {
         units.Add(unit);
         unit.SetActive(false);
     }
-    public void ReleaseUnits(int Count, GameObject target)
+    public virtual void ReleaseUnits(int Count, GameObject target)
     {
         int unitCount = math.min(Count, units.Count);
         for (int i = unitCount - 1; i >= 0; i--)

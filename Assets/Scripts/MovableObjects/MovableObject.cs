@@ -23,6 +23,10 @@ public class MovableObject : MonoBehaviour
         target = newTarget;
         agent.SetDestination(target.transform.position);
     }
+    public void SetTarget(Vector2 newTarget)
+    {
+        agent.SetDestination(newTarget);
+    }
 
     private protected void Awake()
     {

@@ -70,7 +70,14 @@ public class Enemy : MovableObject
         health -= damage;
         if (health < 0)
         {
-            owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
+            if (owner.CompareTag("Tower"))
+            {
+                owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
+            }
+            if (owner.CompareTag("Warrior"))
+            {
+                owner.GetComponent<Warrior>().RemoveEnemyFromList(gameObject);
+            }
             gameObject.SetActive(false);
             Destroy(gameObject);
         }

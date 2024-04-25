@@ -96,7 +96,7 @@ public class UnitController : MonoBehaviour
             {
                 selectedTower.GetComponent<Tower>().ReleaseUnits(1, targetTower);
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

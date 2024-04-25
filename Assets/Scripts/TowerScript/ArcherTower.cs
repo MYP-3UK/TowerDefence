@@ -6,12 +6,12 @@ using UnityEngine;
 public class ArcherTower : Tower
 {
     List<GameObject> enemiesInRange; // SerializeField вызывает ошибку, потому что когда объекты удал€ютс€, UnityEditor всЄ равно пытаетс€ к ним обратитс€ :/
-    [SerializeField] CircleCollider2D RangeOfAttack;
+    [SerializeField] CircleCollider2D rangeOfAttack;
     [SerializeField] GameObject projectile;
     [SerializeField] float attackRate;
     [SerializeField] float attackTimer;
     [SerializeField] float projSpeed;
-    [SerializeField] bool IsFire;
+    [SerializeField] bool isFire;
     [SerializeField] TargetType type;
 
     enum TargetType
@@ -43,7 +43,7 @@ public class ArcherTower : Tower
     void SpawnProjectile(GameObject target)
     {
         Vector2 targetCenter = target.GetComponent<BoxCollider2D>().bounds.center;
-        Vector2 towerCenter = (Vector2)transform.position + RangeOfAttack.offset;
+        Vector2 towerCenter = (Vector2)transform.position + rangeOfAttack.offset;
         Vector2 direction = (targetCenter - towerCenter).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
@@ -55,7 +55,7 @@ public class ArcherTower : Tower
     private void Awake()
     {
         enemiesInRange = new List<GameObject>();
-        RangeOfAttack = GetComponent<CircleCollider2D>() ?? gameObject.AddComponent<CircleCollider2D>();
+        rangeOfAttack = GetComponent<CircleCollider2D>() ?? gameObject.AddComponent<CircleCollider2D>();
     }
 
     #region Find enemies in range of attack
@@ -101,7 +101,7 @@ public class ArcherTower : Tower
     }
     private void OnDrawGizmos()
     {
-        if (RangeOfAttack != null) Handles.DrawWireDisc(transform.position + (Vector3)RangeOfAttack.offset, Vector3.forward, RangeOfAttack.radius);
+        if (rangeOfAttack != null) Handles.DrawWireDisc(transform.position + (Vector3)rangeOfAttack.offset, Vector3.forward, rangeOfAttack.radius);
         if (enemiesInRange != null && enemiesInRange.Count != 0)
         {
             foreach (GameObject enemy in enemiesInRange)
