@@ -50,6 +50,19 @@ public class Unit : MovableObject
         stepTime += Time.deltaTime * jigglingCoef.Evaluate(agent.velocity.magnitude);
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(stepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
     }
+    public void ApplyDamage(float damage, GameObject owner)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            if (owner.CompareTag("Enemy"))
+            {
+                owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
+            }
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
 
     //TODO
     #region Effects 

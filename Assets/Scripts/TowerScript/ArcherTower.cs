@@ -13,6 +13,8 @@ public class ArcherTower : Tower
     [SerializeField] float projSpeed;
     [SerializeField] bool isFire;
     [SerializeField] TargetType type;
+    [SerializeField] AnimationCurve Efficiency;
+    [SerializeField] float efficiency_coef;
 
     enum TargetType
     {
@@ -87,10 +89,10 @@ public class ArcherTower : Tower
 
     private void Update()
     {
-
+        efficiency_coef = (Efficiency.Evaluate(units.Count));
         if (enemiesInRange.Count != 0)
         {
-            attackTimer += Time.deltaTime / attackRate;
+            attackTimer += Time.deltaTime / attackRate * (Efficiency.Evaluate(units.Count));
             while (attackTimer > 1)
             {
                 var target = SelectTarget(type);

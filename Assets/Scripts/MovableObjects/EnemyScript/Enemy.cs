@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class Enemy : MovableObject
@@ -14,12 +16,18 @@ public class Enemy : MovableObject
 
     [Header("Characteristics")]
     [SerializeField] private float health = 1f;
-    [SerializeField] private float damage = 1f;
-    [SerializeField] private float radiusOfAttack = 1f;
     [SerializeField] private float distanceToEnter = 1f; //Дистанция при которой враг попадает на базу
     [Header("Active effects")]
     private List<Effect> effects = new List<Effect>();
     public bool isDead;
+
+    [Header("Attack stats")]
+    [SerializeField] private List<GameObject> unitsInRange = new List<GameObject>();
+    [SerializeField] CircleCollider2D rangeOfAttack;
+    [SerializeField] private float damage = 1f;
+    [SerializeField] private float attackSpeed = 1f;
+    private bool isAttacking;
+    private GameObject _target;
 
     private float stepTime; // Фаза ходьбы (для того, чтобы все враги не шли в одну ногу)
 
@@ -47,17 +55,21 @@ public class Enemy : MovableObject
             FindNewTarget();
         }
 
-        if (isFlipping && Mathf.Abs(agent.velocity.x) > velocityForFlipping)
+        Attack();
+
+
+        if (isFlipping && Mathf.Abs(agent.velocity.x) > velocityForFlipping) //Поворот модельки при изменении горизонтальной скорости
         {
             spriteRenderer.flipX = agent.velocity.x > 0;
         }
-
     }
 
     void FindNewTarget()
     {
         SetTarget(GameObject.FindGameObjectsWithTag("Base").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault());
     }
+
+
 
     void ApplyJiggling()
     {
@@ -82,6 +94,81 @@ public class Enemy : MovableObject
             Destroy(gameObject);
         }
     }
+
+
+
+    #region Update list of units
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Проверяем, является ли объект врагом
+        if (other.gameObject.CompareTag("Unit") || other.gameObject.CompareTag("Warrior"))
+        {
+            // Добавляем врага в список
+            unitsInRange.Add(other.gameObject);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Проверяем, является ли объект врагом
+        if (other.gameObject.CompareTag("Unit") || other.gameObject.CompareTag("Warrior"))
+        {
+            // Удаляем врага из списка
+            unitsInRange.Remove(other.gameObject);
+        }
+    }
+    public void RemoveUnitFromList(GameObject unit)
+    {
+        unitsInRange.Remove(unit);
+    }
+
+    void OnDrawGizmos()
+    {
+        if (rangeOfAttack != null) Handles.DrawWireDisc(transform.position + (Vector3)rangeOfAttack.offset, Vector3.forward, rangeOfAttack.radius);
+    }
+
+    #endregion
+
+    #region Attack nearest unit
+
+    void Attack()
+    {
+        if (unitsInRange.Count > 0)
+        {
+            _target = unitsInRange.OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault();
+            if (_target == null) return;
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                StartCoroutine(AttackCycle());
+            }
+        }
+        else
+        {
+            isAttacking = false;
+            StopCoroutine(AttackCycle());
+        }
+        
+    }
+
+    IEnumerator AttackCycle()
+    {
+        while (isAttacking)
+        {
+            switch (_target.tag)
+            {
+                case "Unit":
+                    _target.GetComponent<Unit>().ApplyDamage(damage, gameObject);
+                    break;
+                case "Warrior":
+                    _target.GetComponent<Warrior>().ApplyDamage(damage, gameObject);
+                    break;
+            }    
+            yield return new WaitForSeconds(attackSpeed);
+        }
+    }
+
+
+    #endregion
 
     //TODO
     #region Effects 

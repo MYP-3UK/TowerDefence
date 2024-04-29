@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static CustomTools;
 
 public class Warrior : MovableObject
 {
@@ -23,6 +21,7 @@ public class Warrior : MovableObject
     [SerializeField] float attackDamage;
     [SerializeField] float attackSpeed;
     [SerializeField] float attackRange;
+    [SerializeField] float health;
 
     [SerializeField] float patrolTime;
     [SerializeField] Vector2 patrolTarget;
@@ -62,7 +61,7 @@ public class Warrior : MovableObject
     void Attack()
     {
         var enemiesInPatrolRange = enemiesInRange.
-                                    Where(x => (x.transform.position - MotherTower.transform.position).magnitude < MotherTower.GetComponent<WarriorTower>().PatrolDistance);
+                                    Where(x => x!=null && (x.transform.position - MotherTower.transform.position).magnitude < MotherTower.GetComponent<WarriorTower>().PatrolDistance);
         if (enemiesInPatrolRange.Count() > 0)
         {
             _target = enemiesInPatrolRange.
@@ -95,6 +94,7 @@ public class Warrior : MovableObject
 
     IEnumerator AttackCycle()
     {
+        yield return new WaitForSeconds(Random.value * attackSpeed);
         while (_target != null && state == State.Stalking)
         {
             if (Vector2.Distance(_target.transform.position, (Vector2)transform.position + rangeOfVision.offset) < attackRange)
@@ -107,12 +107,26 @@ public class Warrior : MovableObject
     }
     IEnumerator PatrolCycle()
     {
+        yield return new WaitForSeconds(Random.value*patrolTime);
         while (state == State.Patrolling)
         {
             yield return new WaitForEndOfFrame();
             patrolTarget = (Vector2)MotherTower.transform.position + Random.insideUnitCircle * (MotherTower.GetComponent<WarriorTower>().PatrolDistance+1);
             SetTarget(patrolTarget);
             yield return new WaitForSeconds(patrolTime);
+        }
+    }
+    public void ApplyDamage(float damage, GameObject owner)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            if (owner.CompareTag("Enemy"))
+            {
+                owner.GetComponent<Enemy>().RemoveUnitFromList(gameObject);
+            }
+            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

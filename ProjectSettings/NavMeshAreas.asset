@@ -15,8 +15,8 @@ NavMeshProjectSettings:
     cost: 2
   - name: Tower
     cost: 4
-  - name: 
-    cost: 1
+  - name: Hills
+    cost: 2
   - name: 
     cost: 1
   - name: 
