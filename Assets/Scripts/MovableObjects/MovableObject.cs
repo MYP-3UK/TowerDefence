@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,8 +11,12 @@ public class MovableObject : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private protected float baseSpeed;
     [SerializeField] private protected NavMeshAgent agent;
+    [SerializeField] private protected float health;
     public GameObject Target => target;
     public float BaseSpeed => baseSpeed;
+    public float Health => health;
+
+    public bool isDead;
 
     public void SetTarget(GameObject newTarget)
     {
@@ -45,7 +50,7 @@ public class MovableObject : MonoBehaviour
 
     private protected void Update()
     {
-        if (target == null) return;
+        if (target == null || isDead) return;
 
         if (agent.Raycast(agent.transform.position, out var hit))
         {
@@ -56,5 +61,29 @@ public class MovableObject : MonoBehaviour
     {
         agent.Raycast(agent.transform.position, out var hit);
         agent.speed = BaseSpeed / agent.GetAreaCost(FirstBitIndex(hit.mask));
+    }
+
+    public void ApplyDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            Die();
+        }
+    }
+    private protected void Die()
+    {
+        isDead = true;
+        StartCoroutine(DieTimer());
+        agent.enabled = false;
+        enabled = false;
+        transform.position = -Vector3.one;
+
+    }
+
+    protected IEnumerator DieTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }

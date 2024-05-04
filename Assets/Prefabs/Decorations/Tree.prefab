@@ -98,12 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92728da5e11636a4f874df78ac8de6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RandomizationScale: {x: 0.125, y: 0.125}
+  RandomizationScale: {x: 0.125, y: 0.25}
   RandomOffset: {x: 0.125, y: 0.125}
+  RandomRotation: 5
   Color:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 0.59599996, g: 0.59599996, b: 0.59599996, a: 1}
+    key1: {r: 0.85, g: 0.85, b: 0.85, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using Unity.Mathematics;
-using UnityEngine;
 using System.Linq;
+using Unity.Mathematics;
+using UnityEditor;
+using UnityEngine;
 
 public class WarriorTower : Tower
 {
@@ -16,8 +15,24 @@ public class WarriorTower : Tower
         warriors = new Dictionary<GameObject, GameObject>();
     }
 
+    new void UpdateUnitList()
+    {
+        for (int i = warriors.Count - 1; i >= 0; i--)
+        {
+            var pair = warriors.ElementAt(i);
+            if (pair.Value==null || pair.Value.GetComponent<MovableObject>().isDead)
+            {
+                pair.Key.SetActive(true);
+                pair.Key.GetComponent<MovableObject>().ApplyDamage(1000);
+                warriors.Remove(pair.Key);
+            }
+        }
+        base.UpdateUnitList();
+    }
+
     public override void EnterUnit(GameObject unit)
     {
+        UpdateUnitList();
         Debug.Log("Зашёл");
         units.Add(unit);
         var _warrior = Instantiate(warrior, unit.transform.position, Quaternion.identity, transform);
@@ -28,6 +43,7 @@ public class WarriorTower : Tower
     }
     public override void ReleaseUnits(int Count, GameObject target)
     {
+        UpdateUnitList();
         int unitCount = math.min(Count, units.Count);
         for (int i = unitCount - 1; i >= 0; i--)
         {

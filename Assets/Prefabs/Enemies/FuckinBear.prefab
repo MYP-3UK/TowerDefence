@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2430224197861133604}
   - component: {fileID: 5892098703185906318}
   - component: {fileID: 7356812781943237813}
+  - component: {fileID: 8567663876010176672}
   - component: {fileID: 3814967767186946834}
   - component: {fileID: 7184460096660434595}
   - component: {fileID: 2158577964959492468}
@@ -104,6 +105,8 @@ MonoBehaviour:
   target: {fileID: 0}
   baseSpeed: 4
   agent: {fileID: 3814967767186946834}
+  health: 5
+  isDead: 0
   jigglingCoef:
     serializedVersion: 2
     m_Curve:
@@ -163,13 +166,25 @@ MonoBehaviour:
     m_RotationOrder: 4
   isFlipping: 1
   velocityForFlipping: 0.5
-  health: 5
   distanceToEnter: 1
-  isDead: 0
   unitsInRange: []
   rangeOfAttack: {fileID: 2158577964959492468}
-  damage: 0
-  attackSpeed: Infinity
+  damage: 1
+  attackSpeed: 1
+  abilityHolder: {fileID: 0}
+--- !u!114 &8567663876010176672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620455256195025593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea91c856cc337c4ca106c24b8f26f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: 5b5c855236511cb4da5a3a39ae11ed06, type: 2}
 --- !u!195 &3814967767186946834
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -12,9 +12,9 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: Forest
-    cost: 2
-  - name: Tower
     cost: 4
+  - name: Tower
+    cost: 8
   - name: Hills
     cost: 2
   - name: 

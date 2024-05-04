@@ -20,4 +20,11 @@ public class CustomTools
 
         return index;
     }
+
+    public enum Team
+    {
+        none,
+        friend,
+        enemy
+    }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5889732243921246830}
   - component: {fileID: 1317551644554958297}
+  - component: {fileID: -8690275866821841235}
   - component: {fileID: 5126580036733035393}
   - component: {fileID: 7428871156097754899}
   - component: {fileID: 592637405662841593}
@@ -52,6 +53,8 @@ MonoBehaviour:
   target: {fileID: 0}
   baseSpeed: 3
   agent: {fileID: 7428871156097754899}
+  health: 10
+  isDead: 0
   MotherTower: {fileID: 0}
   enemiesInRange: []
   rangeOfVision: {fileID: 281105989036903900}
@@ -115,10 +118,23 @@ MonoBehaviour:
   attackDamage: 1
   attackSpeed: 0.25
   attackRange: 0.67
-  health: 10
   patrolTime: 2
   patrolTarget: {x: 0, y: 0}
+  abilityHolder: {fileID: 0}
   state: 0
+--- !u!114 &-8690275866821841235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767927839113003934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea91c856cc337c4ca106c24b8f26f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: 5b5c855236511cb4da5a3a39ae11ed06, type: 2}
 --- !u!212 &5126580036733035393
 SpriteRenderer:
   m_ObjectHideFlags: 0

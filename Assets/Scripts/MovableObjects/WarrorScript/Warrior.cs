@@ -21,12 +21,12 @@ public class Warrior : MovableObject
     [SerializeField] float attackDamage;
     [SerializeField] float attackSpeed;
     [SerializeField] float attackRange;
-    [SerializeField] float health;
-
     [SerializeField] float patrolTime;
     [SerializeField] Vector2 patrolTarget;
 
-    enum State 
+    [SerializeField] AbilityHolder abilityHolder;
+
+    enum State
     {
         None = 0,
         Stalking,
@@ -41,13 +41,21 @@ public class Warrior : MovableObject
         state = State.None;
         enemiesInRange = new List<GameObject>();
         rangeOfVision = GetComponent<CircleCollider2D>() ?? gameObject.AddComponent<CircleCollider2D>();
+        abilityHolder = GetComponent<AbilityHolder>() ?? gameObject.AddComponent<AbilityHolder>();
     }
 
     new void Update()
     {
+        UpdateEnemyList();
+
+        if (isDead)
+        {
+            StopAllCoroutines();
+            enabled = false;
+            return;
+        }
+
         ChangeSpeed();
-
-
         ApplyJiggling();
         Patrol();
         Attack();
@@ -61,7 +69,7 @@ public class Warrior : MovableObject
     void Attack()
     {
         var enemiesInPatrolRange = enemiesInRange.
-                                    Where(x => x!=null && (x.transform.position - MotherTower.transform.position).magnitude < MotherTower.GetComponent<WarriorTower>().PatrolDistance);
+                                    Where(x => x != null && (x.transform.position - MotherTower.transform.position).magnitude < MotherTower.GetComponent<WarriorTower>().PatrolDistance);
         if (enemiesInPatrolRange.Count() > 0)
         {
             _target = enemiesInPatrolRange.
@@ -75,9 +83,9 @@ public class Warrior : MovableObject
                 StartCoroutine(AttackCycle());
             }
         }
-        else if(state == State.Stalking)
+        else if (state == State.Stalking)
         {
-            
+
             state = State.None;
             _target = null;
         }
@@ -85,7 +93,7 @@ public class Warrior : MovableObject
 
     void Patrol()
     {
-        if (enemiesInRange.Count == 0 && (state == State.None||state == State.Stalking))
+        if (enemiesInRange.Count == 0 && (state == State.None || state == State.Stalking))
         {
             state = State.Patrolling;
             StartCoroutine(PatrolCycle());
@@ -99,37 +107,25 @@ public class Warrior : MovableObject
         {
             if (Vector2.Distance(_target.transform.position, (Vector2)transform.position + rangeOfVision.offset) < attackRange)
             {
-                _target.GetComponent<Enemy>().ApplyDamage(attackDamage, gameObject);
+                abilityHolder.ActivateAbility(_target);
             }
             Debug.Log("Attack!");
-            yield return new WaitForSeconds(attackSpeed);
+            yield return null;
         }
     }
     IEnumerator PatrolCycle()
     {
-        yield return new WaitForSeconds(Random.value*patrolTime);
-        while (state == State.Patrolling)
+        yield return new WaitForSeconds(Random.value * patrolTime);
+        while (state == State.Patrolling && agent.isOnNavMesh)
         {
             yield return new WaitForEndOfFrame();
-            patrolTarget = (Vector2)MotherTower.transform.position + Random.insideUnitCircle * (MotherTower.GetComponent<WarriorTower>().PatrolDistance+1);
+            patrolTarget = (Vector2)MotherTower.transform.position + (Random.insideUnitCircle * (MotherTower.GetComponent<WarriorTower>().PatrolDistance + 1));
             SetTarget(patrolTarget);
             yield return new WaitForSeconds(patrolTime);
         }
     }
-    public void ApplyDamage(float damage, GameObject owner)
-    {
-        health -= damage;
-        if (health < 0)
-        {
-            if (owner.CompareTag("Enemy"))
-            {
-                owner.GetComponent<Enemy>().RemoveUnitFromList(gameObject);
-            }
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
-    }
 
+    #region Update list of enemies
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Проверяем, является ли объект врагом
@@ -148,10 +144,18 @@ public class Warrior : MovableObject
             enemiesInRange.Remove(other.gameObject);
         }
     }
-    public void RemoveEnemyFromList(GameObject enemy)
+
+    public void UpdateEnemyList()
     {
-        enemiesInRange.Remove(enemy);
+        for (int i = enemiesInRange.Count - 1; i >= 0; i--)
+        {
+            if (enemiesInRange[i].GetComponent<MovableObject>().isDead)
+            {
+                enemiesInRange.RemoveAt(i);
+            }
+        }
     }
+    #endregion
 
     private void OnDrawGizmos()
     {

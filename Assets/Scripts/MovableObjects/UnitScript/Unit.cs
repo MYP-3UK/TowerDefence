@@ -8,7 +8,6 @@ public class Unit : MovableObject
     [SerializeField] private AnimationCurve jigglingCoef; //Частота шага в зависимости от скорости
     [SerializeField] private AnimationCurve jigglingAmp;  //Амплитуда покачиваний во время ходьбы
     [Header("Characteristics")]
-    [SerializeField] private float health = 1f;
     [SerializeField] private float distanceToEnter = 1f;  //Дистанция при которой юнит попадает в здание
     [Header("Active effects")]
     private List<Effect> effects = new List<Effect>();
@@ -49,19 +48,6 @@ public class Unit : MovableObject
     {
         stepTime += Time.deltaTime * jigglingCoef.Evaluate(agent.velocity.magnitude);
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(stepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
-    }
-    public void ApplyDamage(float damage, GameObject owner)
-    {
-        health -= damage;
-        if (health < 0)
-        {
-            if (owner.CompareTag("Enemy"))
-            {
-                owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
-            }
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
     }
 
     //TODO

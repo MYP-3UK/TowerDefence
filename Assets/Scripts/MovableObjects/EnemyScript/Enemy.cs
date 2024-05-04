@@ -14,12 +14,11 @@ public class Enemy : MovableObject
     [SerializeField] private bool isFlipping; //Отражение спрайта в зависимости от направления движения
     [SerializeField] private float velocityForFlipping; //Пороговое значение скорости, при котором меняется направление
 
+
     [Header("Characteristics")]
-    [SerializeField] private float health = 1f;
     [SerializeField] private float distanceToEnter = 1f; //Дистанция при которой враг попадает на базу
     [Header("Active effects")]
     private List<Effect> effects = new List<Effect>();
-    public bool isDead;
 
     [Header("Attack stats")]
     [SerializeField] private List<GameObject> unitsInRange = new List<GameObject>();
@@ -33,17 +32,28 @@ public class Enemy : MovableObject
 
     private SpriteRenderer spriteRenderer;
 
+    [SerializeField] AbilityHolder abilityHolder;
+
     new void Awake()
     {
         base.Awake(); // Вызов Awake из MovableObject
         stepTime = Random.value;
 
         spriteRenderer = GetComponent<SpriteRenderer>() ?? gameObject.AddComponent<SpriteRenderer>();
+        abilityHolder = GetComponent<AbilityHolder>() ?? gameObject.AddComponent<AbilityHolder>();
     }
 
     new void Update()
     {
+        UpdateUnitList();
         base.Update(); // Вызов Update из MovableObject
+
+        if (isDead)
+        {
+            StopAllCoroutines();
+            enabled = false;
+            return;
+        }
 
         if (Target != null)
         {
@@ -77,26 +87,6 @@ public class Enemy : MovableObject
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(stepTime * Mathf.PI) * jigglingAmp.Evaluate(agent.velocity.magnitude));
     }
 
-    public void ApplyDamage(float damage, GameObject owner)
-    {
-        health -= damage;
-        if (health < 0)
-        {
-            if (owner.CompareTag("Tower"))
-            {
-                owner.GetComponent<ArcherTower>().RemoveEnemyFromList(gameObject);
-            }
-            if (owner.CompareTag("Warrior"))
-            {
-                owner.GetComponent<Warrior>().RemoveEnemyFromList(gameObject);
-            }
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
-    }
-
-
-
     #region Update list of units
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -119,6 +109,16 @@ public class Enemy : MovableObject
     public void RemoveUnitFromList(GameObject unit)
     {
         unitsInRange.Remove(unit);
+    }
+    private void UpdateUnitList()
+    {
+        for (int i = unitsInRange.Count - 1; i >= 0; i--)
+        {
+            if (unitsInRange[i].GetComponent<MovableObject>().isDead)
+            {
+                unitsInRange.RemoveAt(i);
+            }
+        }
     }
 
     void OnDrawGizmos()
@@ -147,23 +147,15 @@ public class Enemy : MovableObject
             isAttacking = false;
             StopCoroutine(AttackCycle());
         }
-        
+
     }
 
     IEnumerator AttackCycle()
     {
         while (isAttacking)
         {
-            switch (_target.tag)
-            {
-                case "Unit":
-                    _target.GetComponent<Unit>().ApplyDamage(damage, gameObject);
-                    break;
-                case "Warrior":
-                    _target.GetComponent<Warrior>().ApplyDamage(damage, gameObject);
-                    break;
-            }    
-            yield return new WaitForSeconds(attackSpeed);
+            abilityHolder.ActivateAbility(_target);
+            yield return null;
         }
     }
 
