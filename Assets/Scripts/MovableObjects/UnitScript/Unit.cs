@@ -1,34 +1,41 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Unit : MovableObject
 {
     [Header("Animation coefs")]
-    [SerializeField] private AnimationCurve jigglingCoef; //Частота шага в зависимости от скорости
-    [SerializeField] private AnimationCurve jigglingAmp;  //Амплитуда покачиваний во время ходьбы
+    [SerializeField] private AnimationCurve jigglingCoef; 
+    [SerializeField] private AnimationCurve jigglingAmp;  
     [Header("Characteristics")]
-    [SerializeField] private float distanceToEnter = 1f;  //Дистанция при которой юнит попадает в здание
+    [SerializeField] public string idunit = "";
+    private EntityinJson entityinJson; 
+    private EntityData entityData; 
     [Header("Active effects")]
     private List<Effect> effects = new List<Effect>();
 
-    private float stepTime; // Фаза ходьбы 
+    private float stepTime; // Г”Г Г§Г  ГµГ®Г¤ГјГЎГ» 
+
+    private void Start()
+    {
+        entityinJson = new EntityinJson();
+        entityData = entityinJson.GetStats(idunit);
+    }
     new void Awake()
     {
-        base.Awake(); // Вызов Awake из MovableObject
-        stepTime = Random.value; //Рандомная фаза шага (для того, чтобы все юниты не шли в одну ногу)
+        base.Awake(); 
+        stepTime = Random.value; 
     }
 
     new void Update()
     {
-        base.Update(); // Вызов Update из MovableObject
 
+        base.Update(); // Г‚Г»Г§Г®Гў Update ГЁГ§ MovableObject
         if (Target != null)
         {
             ChangeSpeed();
             ApplyJiggling();
-
-            if (Vector3.Distance(Target.transform.position, transform.position) < distanceToEnter)
+            if (Vector3.Distance(Target.transform.position, transform.position) < entityData.distanceToEnter)
             {
                 Target.GetComponent<Tower>().EnterUnit(gameObject);
             }

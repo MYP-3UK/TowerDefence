@@ -1,0 +1,42 @@
+{
+    "id0": {
+      "Name": "Settler",
+      "type": "Humanoid",
+      "MoveSpeed": 3.5,
+      "AttackSpeed": 1,
+      "Health": 5,
+      "Durability": 10,
+      "Vulnerability": 1,
+      "DistanceToEnter": 1
+    },
+    "id1": {
+      "Name": "Samurai",
+      "type": "Humanoid",
+      "MoveSpeed": 4,
+      "AttackSpeed": 10,
+      "Health": 10,
+      "Durability": 10,
+      "Vulnerability": 5,
+      "DistanceToEnter": 1
+    },
+    "id2": {
+      "Name": "Haijin",
+      "type": "Humanoid",
+      "MoveSpeed": 3,
+      "AttackSpeed": 8,
+      "Health": 8,
+      "Durability": 5,
+      "Vulnerability": 7,
+      "DistanceToEnter": 1
+    },
+    "id3": {
+      "Name": "Maekusha",
+      "type": "Humanoid",
+      "MoveSpeed": 4.5,
+      "AttackSpeed": 5,
+      "Health": 6,
+      "Durability": 3,
+      "Vulnerability": 10,
+      "DistanceToEnter": 1
+    }
+}

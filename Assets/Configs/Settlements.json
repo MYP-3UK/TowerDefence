@@ -1,0 +1,20 @@
+{
+  "id0" :
+  {
+    "Captured" : true,
+    "CountofUnits": 100,
+    "CountofCurrency" : 200,
+    "CountofTownholders" : 1,
+    "CountofBuildings" : 5,
+    "Townholders" : " "
+  },
+  "id1" :
+  {
+    "Captured" : false,
+    "CountofUnits": 100,
+    "CountofCurrency" : 200,
+    "CountofTownholders" : 1,
+    "CountofBuildings" : 5,
+    "Townholders" : " "
+  }
+}
