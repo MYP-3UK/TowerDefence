@@ -18,16 +18,14 @@ public class SavedData
     public int CapturedSettlements { get; set; }
     public DateTime TimeofExit { get; set; }
 
-    
-    
 }
 
 public class GameData : MonoBehaviour
 {
-    public UnityEvent<double> OnResourceCountChanged;
+    //public UnityEvent<double> OnResourceCountChanged;
     public TimeTracker tracker;
-    public SavedData data;
-    public double allmoney;
+    [SerializeField] public SavedData data;
+    [SerializeField] public double allmoney;
     private MoneyHandler moneyHandler;
     private DrawElements drawElements;
     [SerializeField] TMP_Text uncapturedSettlements;
@@ -44,7 +42,6 @@ public class GameData : MonoBehaviour
 
         data.OutsideCurrency = moneyHandler.PassedMoney(secondsPassed, data.OutsideCurrency); 
         allmoney = data.OutsideCurrency;
-
         DrawSettlements();
 
         return data;

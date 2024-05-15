@@ -62,7 +62,6 @@ public class EntityinJson : MonoBehaviour
             {
                 if (entityDataDict.TryGetValue(idunit, out EntityData data))
                 {
-                    Debug.Log("data::" + data.distanceToEnter);
                     entityData = data;
                     return entityData;
                 }

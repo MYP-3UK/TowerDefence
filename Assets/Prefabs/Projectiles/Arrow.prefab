@@ -50,7 +50,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   damage: 1
   despawnTime: 0.5
-  mask: -1
+  team: 0
 --- !u!61 &1201311217095213922
 BoxCollider2D:
   m_ObjectHideFlags: 0

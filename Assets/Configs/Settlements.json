@@ -11,8 +11,8 @@
   "id1" :
   {
     "Captured" : false,
-    "CountofUnits": 100,
-    "CountofCurrency" : 200,
+    "CountofUnits": 150,
+    "CountofCurrency" : 2330,
     "CountofTownholders" : 1,
     "CountofBuildings" : 5,
     "Townholders" : " "

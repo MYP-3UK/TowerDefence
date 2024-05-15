@@ -6,27 +6,18 @@ using TMPro;
 
 public class Settlement : MonoBehaviour
 {
-    private SettlementfromJSON settlementfromJSON = new();
-    private SettlementsData settlementData;
+    public TMP_Text currency;
+    public SettlementfromJSON settlementfromJSON = new();
+    [SerializeField] public string idsettlement;
+    public Settlements data;
+    //private SettlementsData settlementData;
     //public TMP_Text uncapturesssdsettlements;
-    [SerializeField] public string idsettlement = "";
     public void Start()
     {
-        settlementfromJSON.GetStats(idsettlement);
-        CaptureSettlement();
+        data = settlementfromJSON.GetStats(idsettlement);
     }
-
-    void Update()
+    public void Update()
     {
-        
-
+        currency.text = data.countofCurrency.ToString("#");
     }
-
-    public SettlementsData CaptureSettlement()
-    {
-
-        return null;
-    }
-
-
 }
