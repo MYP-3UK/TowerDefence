@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7128341537634597820}
   - component: {fileID: 4280947066982475552}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Miner
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,8 +102,6 @@ MonoBehaviour:
   target: {fileID: 0}
   baseSpeed: 3
   agent: {fileID: 0}
-  health: 5
-  isDead: 0
   jigglingCoef:
     serializedVersion: 2
     m_Curve:
@@ -161,7 +159,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  idunit: id0
+  health: 5
+  distanceToEnter: 0.5
 --- !u!195 &7128341537634597820
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine;
 public class WarriorTower : Tower
 {
     [SerializeField] GameObject warrior;
-    [SerializeField] Dictionary<GameObject, GameObject> warriors;
+    [SerializeField] public Dictionary<GameObject, GameObject> warriors;
     [SerializeField] public float PatrolDistance;
 
     public void Awake()
@@ -28,6 +28,11 @@ public class WarriorTower : Tower
             }
         }
         base.UpdateUnitList();
+    }
+    public new int GetUnitsCount()
+    {
+        UpdateUnitList();
+        return units.Count;
     }
 
     public override void EnterUnit(GameObject unit)

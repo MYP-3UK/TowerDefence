@@ -91,7 +91,7 @@ public class Enemy : MovableObject
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Проверяем, является ли объект врагом
-        if (other.gameObject.CompareTag("Unit") || other.gameObject.CompareTag("Warrior"))
+        if (other.gameObject.CompareTag("Miner") || other.gameObject.CompareTag("Warrior"))
         {
             // Добавляем врага в список
             unitsInRange.Add(other.gameObject);
@@ -100,7 +100,7 @@ public class Enemy : MovableObject
     private void OnTriggerExit2D(Collider2D other)
     {
         // Проверяем, является ли объект врагом
-        if (other.gameObject.CompareTag("Unit") || other.gameObject.CompareTag("Warrior"))
+        if (other.gameObject.CompareTag("Warrior"))
         {
             // Удаляем врага из списка
             unitsInRange.Remove(other.gameObject);

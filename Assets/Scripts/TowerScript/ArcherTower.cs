@@ -97,7 +97,7 @@ public class ArcherTower : Tower
 
     private void Update()
     {
-        //    efficiency_coef = (Efficiency.Evaluate(units.Count));
+        //    efficiency_coef = (Efficiency.Evaluate(miners.Count));
         UpdateEnemyList();
         if (enemiesInRange.Count != 0)
         {

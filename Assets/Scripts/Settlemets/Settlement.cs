@@ -9,11 +9,11 @@ public class Settlement : MonoBehaviour
     public TMP_Text currency;
     public SettlementfromJSON settlementfromJSON = new();
     [SerializeField] public string idsettlement;
-    public Settlements data;
-    //private SettlementsData settlementData;
-    //public TMP_Text uncapturesssdsettlements;
+    [SerializeField] public Settlements data;
+
     public void Start()
     {
+        settlementfromJSON = new();
         data = settlementfromJSON.GetStats(idsettlement);
     }
     public void Update()

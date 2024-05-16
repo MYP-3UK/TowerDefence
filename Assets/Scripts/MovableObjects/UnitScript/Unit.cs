@@ -48,7 +48,7 @@ public class Unit : MovableObject
 
     void FindNewTarget()
     {
-        SetTarget(GameObject.FindGameObjectsWithTag("Tower").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault());
+        SetTarget(GameObject.FindGameObjectsWithTag("Base").OrderBy(x => (x.transform.position - transform.position).magnitude).FirstOrDefault());
     }
 
     void ApplyJiggling()

@@ -9,11 +9,11 @@ public class Settlements
 {
     public bool captured;
     public int countofUnits;
-    public int countofCurrency;
+    public float countofCurrency;
     public int countofTownholders;
     public int countofBuildings;
     public string townholders;
-    public Settlements (bool Captured, int CountofUnits, int CountofCurrency, int CountofTownholders, int CountofBuildings, string Townholders) 
+    public Settlements (bool Captured, int CountofUnits, float CountofCurrency, int CountofTownholders, int CountofBuildings, string Townholders) 
     {
         captured = Captured;
         countofUnits = CountofUnits;

@@ -9,42 +9,25 @@ public class Base : Tower
 {
     public Settlement Settlement;
     public Settlements data;
-    [SerializeField] private List<GameObject> towers;
-    [SerializeField] private GameObject selectedTower;
-    [SerializeField] private GameObject targetTower;
-    [SerializeField] private int countOfUnitsToExit;
-
-    [SerializeField] private float StartPressTime;
-    [SerializeField] private float TimeForDetection = 0.5f;
-    [SerializeField] private bool isLongPressing = false;
-    [SerializeField] private int mask;
-
-    private LineRenderer lineRenderer;
-    private bool isRendered;
-    private Vector3 targetPos;
-    [SerializeField] Gradient EfficiencyGradient;
-
+    [SerializeField] GameObject unitprefab;
+    [SerializeField] private int unitcounter;
     void Start()
     {
         data = Settlement.data;
-        UpdateListOfTowers();
-        selectedTower = GameObject.FindWithTag("Base");
-        ReleaseUnits(data.countofCurrency, selectedTower);
+        Debug.Log("unit i ndata " + data.countofUnits);
+        for(int i =0; i < unitcounter; i++)
+        {
+            var unit = GameObject.Instantiate(unitprefab, transform);
+            unit.GetComponent<MovableObject>().SetTarget(gameObject);
+            //units.Add(unit);
+            unit = null;
+        }
+
     }
     private void Awake()
     {
-        UpdateListOfTowers();
-    }
 
-    private void UpdateListOfTowers()
-    {
-        towers = new List<GameObject>();
-        towers = GameObject.FindGameObjectsWithTag("Tower").ToList();
     }
-
-    public void Update()
-    {
-        UpdateUnitList();
-    }
+    
 
 }

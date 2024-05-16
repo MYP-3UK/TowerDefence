@@ -94,7 +94,7 @@ public class UnitController : MonoBehaviour
         Vector2 touchWorldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
         var hit = Physics2D.RaycastAll(touchWorldPosition, Vector3.forward).FirstOrDefault(x => x.collider is BoxCollider2D);
 
-        if (hit.collider != null && hit.collider.gameObject.CompareTag("Tower"))
+        if (hit.collider != null &&( hit.collider.gameObject.CompareTag("Tower") || hit.collider.gameObject.CompareTag("Base")))
         {
             Debug.Log(hit.collider.gameObject);
             Debug.DrawLine(hit.collider.bounds.min, hit.collider.bounds.max, Color.red, 1);
@@ -123,12 +123,12 @@ public class UnitController : MonoBehaviour
 
                 Vector3 start = selectedTower.transform.position;
                 Vector3 height1 = Vector3.up * selectedTower.GetComponent<BoxCollider2D>().bounds.size.y;
-                float startWidth = (float)selectedTower.GetComponent<Tower>().GetUnitsCount() / 10f;
+                float startWidth = Mathf.Clamp((float)selectedTower.GetComponent<Tower>().GetUnitsCount() / 10f, min: 0.1f, max: 2f);
                 Color startColor = EfficiencyGradient.Evaluate(selectedTower.GetComponent<Tower>().CalcEfficiency());
 
                 Vector3 end = targetPos;
                 Vector3 height2 = Vector3.up * targetTower.GetComponent<BoxCollider2D>().bounds.size.y;
-                float endWidth = (float)targetTower.GetComponent<Tower>().GetUnitsCount() / 10f;
+                float endWidth = Mathf.Clamp((float)targetTower.GetComponent<Tower>().GetUnitsCount() / 10f, min: 0.1f, max: 2f);
                 Color endColor = EfficiencyGradient.Evaluate(targetTower.GetComponent<Tower>().CalcEfficiency());
 
 
@@ -139,7 +139,7 @@ public class UnitController : MonoBehaviour
             {
                 Vector3 start = selectedTower.transform.position;
                 Vector3 height1 = Vector3.up * selectedTower.GetComponent<BoxCollider2D>().bounds.size.y;
-                float startWidth = (float)selectedTower.GetComponent<Tower>().GetUnitsCount() / 10f;
+                float startWidth = Mathf.Clamp((float)selectedTower.GetComponent<Tower>().GetUnitsCount() / 10f, min: 0.1f, max: 2f);
                 Color startColor = EfficiencyGradient.Evaluate(selectedTower.GetComponent<Tower>().CalcEfficiency());
 
                 DrawDot(start + height1, startColor, startWidth);
