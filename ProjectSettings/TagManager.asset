@@ -11,6 +11,7 @@ TagManager:
   - Base
   - Projectile
   - Warrior
+  - Agent
   layers:
   - Default
   - TransparentFX

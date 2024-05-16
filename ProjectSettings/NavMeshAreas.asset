@@ -12,11 +12,11 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: Forest
-    cost: 4
+    cost: 3
   - name: Tower
-    cost: 8
-  - name: Hills
     cost: 2
+  - name: Hills
+    cost: 1.5
   - name: 
     cost: 1
   - name: 
@@ -69,7 +69,7 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
-  m_LastAgentTypeID: 1479372276
+  m_LastAgentTypeID: -1923039037
   m_Settings:
   - serializedVersion: 3
     agentTypeID: 0
